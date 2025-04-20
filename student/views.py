@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+from django.contrib import messages
 # Create your views here.
 def add_student(request):
     if request.method == 'POST':
@@ -58,8 +59,8 @@ def add_student(request):
             student_image = student_image,
             parent = parent
         )
-        
-        
+        messages.success(request,"student added successfully")
+        # return render(request, "student_list")
     return render(request,'add-student.html')
 
 
