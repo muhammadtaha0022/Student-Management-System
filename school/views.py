@@ -1,4 +1,7 @@
+from django.http import HttpResponse,HttpResponseForbidden
 from django.shortcuts import render
+from django.http import JsonResponse
+from .models import Notification
 
 # Create your views here.
 def index(request):
@@ -6,6 +9,22 @@ def index(request):
 
 
 def dashboard(request):
-    # unread_notification = Notification.objects.filter(user=request.user, is_read=False)
-    # unread_notification_count = unread_notification.count()
+    unread_notification = Notification.objects.filter(user=request.user, is_read=False)
+    unread_notification_count = unread_notification.count()
     return render(request, "student-dashboard.html")
+
+
+
+def mark_notification_as_read(request):
+    if request.method == 'POST':
+        notification = Notification.objects.filter(user=request.user, is_read=False)
+        notification.update(is_read=True)
+        return JsonResponse({'status': 'success'})
+    return HttpResponseForbidden()
+
+def clear_all_notification(request):
+    if request.method == "POST":
+        notification = Notification.objects.filter(user=request.user)
+        notification.delete()
+        return JsonResponse({'status': 'success'})
+    return HttpResponseForbidden

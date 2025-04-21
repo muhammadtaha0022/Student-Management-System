@@ -122,3 +122,6 @@ AUTH_USER_MODEL = 'authantication.CustomUser'  # Adjust 'home_auth' to the app w
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # Default backend
 )
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
